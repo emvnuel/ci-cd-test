@@ -11,14 +11,16 @@ pipeline {
         }
 
         stage('Build') {
-            steps {
-                ./mvnw clean compile install -DskipTests
+
+            withMaven {
+                sh "mvn clean compile install -DskipTests"
             }
+
         }
 
         stage('test') {
-            steps {
-                ./mvnw validate test
+            withMaven {
+                sh "mvn validate test"
             }
         }
     }
