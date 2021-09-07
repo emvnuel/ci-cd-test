@@ -10,21 +10,19 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {                
-                withMaven {
-                    sh "mvn clean compile install -DskipTests"
-                }
-            }
-
-        }
-
-        stage('test') {
-            steps {
-                withMaven {
-                    sh "mvn validate test"
-                }
+        stage('Build'){
+            withMaven(maven: 'mvn') {
+                sh "mvn clean compile install -DskipTests"
             }
         }
+
+        
+        stage('Test'){
+            withMaven(maven: 'mvn') {
+                sh "mvn validate test"
+            }
+            
+        }
+
     }
 }
