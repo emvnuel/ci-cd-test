@@ -2,9 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage('Incial') {
+
+        stage('Get Source') {
             steps {
-                echo 'Teste de pipeline'
+                git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
+
+            }
+        }
+
+        stage('Build') {
+            steps {
+                ./mvnw clean compile install -DskipTests
+            }
+        }
+
+        stage('test') {
+            steps {
+                ./mvnw validate test
             }
         }
     }
