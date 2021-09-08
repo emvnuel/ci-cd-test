@@ -4,19 +4,26 @@ pipeline {
     stages {
 
         stage('Get Source') {
-            git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
+            steps {
+                git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
+
+            }
         }
 
         stage('Build'){
-            withMaven(maven: 'mvn') {
-                sh "mvn clean compile install -DskipTests"
+            steps {
+                withMaven(maven: 'mvn') {
+                    sh "mvn clean compile install -DskipTests"
+                }
             }
         }
 
         
         stage('Test'){
-            withMaven(maven: 'mvn') {
-                sh "mvn validate test"
+            steps {
+                withMaven(maven: 'mvn') {
+                    sh "mvn validate test"
+                }
             }
             
         }
