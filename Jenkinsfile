@@ -30,4 +30,13 @@ node {
         }
     }
 
+    stage('Deploy Kubernetes') {
+        agent {
+            kubernetes {
+                cloud 'kubernetes'
+            }
+        }
+        kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
+    }
+
 }
