@@ -1,5 +1,5 @@
 #!groovy
-node("builder") {
+node {
 
     stage('Get Source') {
         git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
