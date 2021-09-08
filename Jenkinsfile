@@ -4,10 +4,7 @@ pipeline {
     stages {
 
         stage('Get Source') {
-            steps {
-                git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
-
-            }
+            git url: 'https://github.com/emvnuel/ci-cd-test.git', branch: 'main'
         }
 
         stage('Build'){
