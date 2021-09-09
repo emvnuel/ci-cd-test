@@ -33,7 +33,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('SonarCloud') {
-                    sh './mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
+                    sh './mvnw verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=emvnuel_ci-cd-test'
                 }
             }
         }
