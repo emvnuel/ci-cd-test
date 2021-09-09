@@ -2,6 +2,12 @@
 pipeline {
 
     agent any
+    environment {
+        PROJECT_ID = credentials('project_id')
+        LOCATION = credentials('cluster_location')
+        CREDENTIALS_ID = 'gke'
+        CLUSTER_NAME = credentials('cluster_name')
+    }
     
     stages {
     
@@ -44,16 +50,18 @@ pipeline {
             }
         }
 
-        stage('Deploy Kubernetes') {
-            agent {
-                kubernetes {
-                    cloud 'kubernetes'
-                }
+    	stage('GKE Deployment') {
+      		steps{
+                step([$class: 'KubernetesEngineBuilder', 
+                      projectId: env.PROJECT_ID, 
+                      clusterName: env.CLUSTER_NAME, 
+                      location: env.LOCATION, 
+                      manifestPattern: './k8s', 
+                      credentialsId: env.CREDENTIALS_ID, 
+                      verifyDeployments: true])
             }
-            steps {
-                kubernetesDeploy(configs: '**/k8s/**', kubeconfigId: 'kubeconfig')
-            }
-        }
+    	}
+
     }
 
 }
